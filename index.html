@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <h1>LIBRARY</h1>
+    <div class="container">
+
+    </div>
+    
+</body>
+
+<script>
+
+const container = document.querySelector(".container")
+
+
+
+
+
+
+function Book(title, author, pages, read) {
+        this.title=title;
+        this.author=author;
+        this.pages=pages;
+        this.read = read
+
+  // the constructor...
+}
+let book1 = new Book("la vie des pouet", "jean mousse", 295,false)
+let book2 = new Book("ma bite", "Sylvain Glu", 108,true)
+let book3 = new Book("un oiseau en espagne", "Hubert Moule", 80,true)
+let myLibrary =[book1,book2,book3]
+ 
+
+function addBookToLibrary() {
+
+  // do stuff here
+}
+
+function render(library){
+        for(let i =0 ; i<library.length ; i++){
+            let entry = document.createElement("div"); 
+            entry.className = `book ${i}`; //create div line//
+                let number= document.createElement("div"); 
+                    number.classList.add("number");
+                    number.textContent = `${i+1}`;
+                    entry.appendChild(number);
+                let title = document.createElement("div"); 
+                    title.classList.add("title");
+                    title.textContent =  library[i].title;
+                    entry.appendChild(title);
+                let author = document.createElement("div"); 
+                    author.classList.add("author");
+                    author.textContent =  library[i].author;
+                    entry.appendChild(author);
+                let pages = document.createElement("div"); 
+                    pages.classList.add("pages");
+                    pages.textContent =  library[i].pages;
+                    entry.appendChild(pages);
+                let checkread = document.createElement("input"); 
+                    checkread.type= "checkbox"
+                    checkread.checked = library[i].read;
+                    entry.appendChild(checkread);
+                
+                
+
+            
+        
+
+
+
+            container.appendChild(entry)
+        }
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
