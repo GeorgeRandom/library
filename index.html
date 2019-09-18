@@ -1,91 +1,233 @@
-:root {
-    --yellow: #ffc600;
-    --black: #272727;
-  }
-  
-  html {
-    /* border-box box model allows us to add padding and border to our elements without increasing their size */
-    box-sizing: border-box;
-    /* A system font stack so things load nice and quick! */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-      Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-weight: 900;
-    font-size: 10px;
-    color: var(--black);
-    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.07);
-    font-weight: normal;
-  }
-  
-  /*
-    WAT IS THIS?!
-    We inherit box-sizing: border-box; from our <html> selector
-    Apparently this is a bit better than applying box-sizing: border-box; directly to the * selector
-  */
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
-  }
-  
-  body {
-    /* background-image: url("./images/topography.svg"),
-      linear-gradient(110deg, #f93d66, #6d47d9); */
-    background-size: 340px, auto;
-    min-height: calc(100vh - 100px);
-    margin: 50px;
-    /* background: white; */
-    background-attachment: fixed;
-    letter-spacing: -1px;
-    font-size: large;
-  }
-  
-  
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0 0 5px 0;
-  }
-  
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
 
-  .uppercontainer{
-    display: grid;
-    transition :1s all;
-    grid-template-columns: 1fr 1fr;
-    margin-bottom: 50px;
+</head>
+<body>
+    <div class="uppercontainer">
+        <div>
+        <h5>my super useful online</h5>
+        <h1>LIBRARY</h1>
+            </div>
+        <div class="btncontain">
+            <button class="newbook">ADD A NEW BOOK</button>
+        </div>
+    
+    <form class="theform" style="display: none;" name="formulaire" action="#">
+            Title:
+            <input type="text" name="title" value="Advanced Javascript: how to become a ninja">
+            <br>
+            Author:
+            <input type="text" name="author" value="Sacha Yordanoff">
+            <br>year
+            <input type="text" name="year" value="2019">
+            <br>
+            I have read it
+            <input type="checkbox" name="checkread" >
+            <br>
+            <input type="button" class="formSubmit" value="Submit">
+            
+            <input type="button" class="done" value="done">
+        </form>
+    </div>
+        
+
+    
+    
+    <div class="container">
+        <div class="top">n°</div>
+        <div class="top">Title</div>
+        <div class="top">Author</div>
+        <div class="top">Pages</div>
+        <div class="top">Read it?</div>
+        <div class="top">remove</div>
+
+    </div>
+    
+</body>
+
+<script>
+let book1 = new Book("La vie des pouet", "jean mousse", 295,false)
+let book2 = new Book("Un Orang-Outang", "Sylvain Glu", 108,true)
+let book3 = new Book("Un oiseau en espagne", "Hubert Moule", 80,true)
+let book4 = new Book("La matinée d'un coléoptère de 2 centimètres, racontée sous forme dansée (et chantée) par un pinson.", "Aristide Kraratoa", 4978,false)
+let myLibrary =[book1,book2,book3,book4]
 
 
-  }
-  .container {
-    transition: 1s all;
-    display : grid;
-    grid-template-columns: 20px 2fr 2fr 1fr 100px 20px;
-    grid-gap: 10px 10px;
-    max-width: 80vw;
-  }
-  .top{
-    font-weight: bold;
-  }
-  .theform{
-      width : 80%;
-      grid-column: span 2;
-  }
+
+const container = document.querySelector(".container")
+const newbookButton= document.querySelector(".newbook")
+const form= document.querySelector(".theform")
+const formSubmit=document.querySelector(".formSubmit")
+const done=document.querySelector(".done")
 
 
-  .remove{
-      height: 20px;
-      text-align:center;
-  }
-  input[type=text], select, textarea{
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    resize: vertical;
-  }
-  .btncontain{
-      text-align: center;
-  }
+render(myLibrary)
+
+
+
+newbookButton.addEventListener("click", function(){
+    form.style.display='block';
+
+})
+
+formSubmit.addEventListener("click", addBookToLibrary);
+
+done.addEventListener("click", closeForm);
+
+
+
+
+
+
+
+
+function closeForm(){
+    form.style = "display :none;"
+
+
+}
+   
+
+
+
+
+
+
+
+function Book(title, author, pages, read) {
+        this.title=title;
+        this.author=author;
+        this.pages=pages;
+        this.read = read
+
+  // the constructor...
+}
+
+
+ 
+
+function addBookToLibrary() {
+    let newTit=form.title.value;
+    let newAuth=form.author.value;
+    let newYear=form.year.value;
+    let newRead = form.checkread.checked;
+    const book = new Book(newTit,newAuth,newYear,newRead);
+
+    
+myLibrary.push(book);
+deletelib();
+render(myLibrary)
+console.log(myLibrary)
+return false
+
+
+    
+    
+  // do stuff here
+}
+
+
+
+
+
+
+
+function deleteBook(){
+    var ref = this.getAttribute("bookreference")
+    myLibrary.splice(ref,1)
+    console.log(myLibrary)
+    deletelib()
+    render(myLibrary)
+
+    
+
+}
+
+
+
+function deletelib(){
+    while (container.childNodes.length >13){
+            container.removeChild(container.lastElementChild)
+        }
+}
+
+function render(library){
+        //delete the grid//
+        
+        
+        
+
+
+
+        for(let i =0 ; i<library.length ; i++){
+            //let entry = document.createElement("div"); //
+            //entry.className = `book ${i}`; //create div line//
+                let number= document.createElement("div"); 
+                    number.classList.add(`book${i}`);
+                    number.classList.add("number");
+                    number.textContent = `${i+1}`;
+                    container.appendChild(number);
+                let title = document.createElement("div"); 
+                    title.classList.add(`book${i}`);
+                    title.classList.add("title");
+                    title.textContent =  library[i].title;
+                    container.appendChild(title);
+                let author = document.createElement("div"); 
+                    author.classList.add(`book${i}`)
+                    author.classList.add("author");
+                    author.textContent =  library[i].author;
+                    container.appendChild(author);
+                let pages = document.createElement("div"); 
+                    pages.classList.add(`book${i}`)
+                    pages.classList.add("pages");
+                    pages.textContent =  library[i].pages;
+                    container.appendChild(pages);
+                let checkread = document.createElement("input"); 
+                    checkread.classList.add(`book${i}`)
+                    checkread.type= "checkbox"
+                    checkread.checked = library[i].read;
+                    container.appendChild(checkread);
+                let remove = document.createElement("button")
+                    remove.classList.add("remove")
+                    remove.classList.add(`book${i}`)
+                    remove.setAttribute("bookreference", i)
+                    remove.textContent ="x"
+                    remove.addEventListener("click",deleteBook)
+                    container.appendChild(remove)
+                
+            
+                     
+                
+
+            
+        
+
+
+
+            //container.appendChild(entry)//
+        }
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
